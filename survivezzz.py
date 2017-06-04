@@ -1,5 +1,24 @@
 from Tkinter import *
+import pygame
 import random
+
+pygame.mixer.init()
+
+pygame.mixer.music.load("audio/bg_music.mp3")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)
+
+zombie0 = pygame.mixer.Sound("audio/zombies0.wav")
+zombie0.set_volume(0.5)
+
+zombie1 = pygame.mixer.Sound("audio/zombies1.wav")
+zombie1.set_volume(0.5)
+
+zombie2 = pygame.mixer.Sound("audio/zombies2.wav")
+zombie2.set_volume(0.5)
+
+zombie3 = pygame.mixer.Sound("audio/zombies3.wav")
+zombie3.set_volume(0.5)
 
 root = Tk()
 
@@ -44,8 +63,10 @@ class zombie():
         c.coords(self.body,self.x-diff,self.y-diff,self.x+diff,self.y+diff)
 
     def kill_check(self):
+        global player_life
         if x+2 <  self.x and x1-2 > self.x and y+2 < self.y and y1-2 > self.y:
-            print('ouch')
+            player_life -= 1
+            print(player_life)
 
 W = root.winfo_screenwidth()
 H = root.winfo_screenheight()
@@ -53,6 +74,8 @@ H = root.winfo_screenheight()
 c = Canvas(root,width= W/2,height=H/2,bg='grey')
 x = W/100
 y = H/100
+player_life = 3
+
 if x <=y:
     diff = x
 else:
@@ -60,6 +83,7 @@ else:
 
 x=y=10-diff
 x1=y1=10+diff
+
 player = c.create_oval(x,y,x1,y1,outline = 'black', fill = 'firebrick')
 z0 = zombie(diff/2, 3)
 z1 = zombie(diff/3,6)
