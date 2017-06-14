@@ -1,2 +1,6 @@
 # survivezzz
 zombie game
+
+Be sure that you already have install Python 2.7, PIL library and Tkinter library.
+
+ZAMAN Muhammad Ali
