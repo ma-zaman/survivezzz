@@ -4,7 +4,31 @@ import random
 import tkMessageBox
 from PIL import Image
 
-game_board = [
+level1 = [
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
+
+level2 = [
             [0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
             [0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1],
             [0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,1,0,0],
@@ -51,13 +75,22 @@ zombie2.set_volume(0.75)
 zombie3 = pygame.mixer.Sound("audio/zombies3.wav")
 zombie3.set_volume(0.75)
 
+explosion1 = pygame.mixer.Sound("audio/explosion1.wav")
+explosion1.set_volume(0.6)
+
+pistol1 = pygame.mixer.Sound("audio/pistol1.wav")
+pistol1.set_volume(0.75)
+
+reload1 = pygame.mixer.Sound("audio/reload.wav")
+reload1.set_volume(0.75)
+
 root = Tk()
 
 def new():
     c.delete(ALL)
 
 def keypress(event):
-    global x,y,x1,y1,player,bullet_number,direction,n,bullet1,bullet2,bullet3,bullet4,bullet5
+    global x,y,x1,y1,player,bullet_number,direction,n,bullet1,bullet2,bullet3,bullet4,bullet5,bomb_number,bomb1,bomb2,bomb3,bomb4,bomb5
     key = event.keysym
     player_wally = ((y/float(h))*100)
     player_wally = int(player_wally/5)
@@ -109,31 +142,37 @@ def keypress(event):
 
     elif key == "space":
         if bullet_number == 0:
+            pistol1.play()
             bullet1 = bullets(direction)
             bullet1.movement()
             bullet_number += 1
 
         elif bullet_number == 1:
+            pistol1.play()
             bullet2 = bullets(direction)
             bullet2.movement()
             bullet_number += 1
 
         elif bullet_number == 2:
+            pistol1.play()
             bullet3 = bullets(direction)
             bullet3.movement()
             bullet_number += 1
 
         elif bullet_number == 3:
+            pistol1.play()
             bullet4 = bullets(direction)
             bullet4.movement()
             bullet_number += 1
 
         elif bullet_number == 4:
+            pistol1.play()
             bullet5 = bullets(direction)
             bullet5.movement()
             bullet_number += 1
 
         else:
+            reload1.play()
             bullet_number = 0
             bullet1.destroy()
             bullet2.destroy()
@@ -141,7 +180,84 @@ def keypress(event):
             bullet4.destroy()
             bullet5.destroy()
 
+    elif key == "R" or key == "r":
+        reload1.play()
+        if bullet_number == 1:
+            bullet1.destroy()
+
+        elif bullet_number == 2:
+            bullet1.destroy()
+            bullet2.destroy()
+
+        elif bullet_number == 3:
+            bullet1.destroy()
+            bullet2.destroy()
+            bullet3.destroy()
+
+        elif bullet_number == 4:
+            bullet1.destroy()
+            bullet2.destroy()
+            bullet3.destroy()
+            bullet4.destroy()
+
+        elif bullet_number == 5:
+            bullet1.destroy()
+            bullet2.destroy()
+            bullet3.destroy()
+            bullet4.destroy()
+            bullet5.destroy()
+        bullet_number = 0
+
+    elif key == "B" or key == "b":
+        if bomb_number == 0:
+            bomb1 = bombs()
+            bomb_number += 1
+
     c.coords(player,x,y,x1,y1)
+
+class bombs():
+    def __init__(self):
+        self.x = x1-diff
+        self.y = y1-diff
+        self.time = 3
+        self.body = c.create_rectangle(self.x-2.5,self.y-2.5,self.x+2.5,self.y+2.5,width=1,fill='navy')
+
+    def countdown(self):
+        global explosion_view,bomb_number
+        if self.time>0:
+            self.time -= 1
+        else:
+            explosion1.play()
+            c.delete(self.body)
+            explosion_view = c.create_oval(self.x-15,self.y-15,self.x+15,self.y+15,width=1,fill='orange')
+            bomb1.explosion_check()
+            bomb_number -= 1
+            root.after(250,bomb_delete)
+
+    def explosion_check(self):
+        global player_life
+        try:
+            for i in range(Kill+1):
+                nbr_zombie[i].explosion_check(self.x,self.y)
+        except:
+            pass
+
+        if self.x-15<x1 and self.x+15>x and self.y-15<y1 and self.y+15>y:
+            player_life -= 3
+            if player_life<0:
+                player_life=0
+            collision_player()
+
+def bomb_main():
+    global n,bomb1,bomb2,bomb3,bomb4,bomb5
+    if bomb_number == 1:
+        bomb1.countdown()
+
+    root.after(1000,bomb_main)
+
+def bomb_delete():
+    global explosion_view
+    c.delete(explosion_view)
 
 class bullets():
     def __init__(self, d):
@@ -315,7 +431,7 @@ class zombie():
             collision_player()
 
     def collision_check(self,x,y,direction):
-        global Kill,Label1,z0,z1,dead_z
+        global Kill,Label1,z0,z1,dead_z,game_board,level2
         if self.x-2.5 <= x <= self.x+2.5 and self.y-2.5 <= y <= self.y+2.5:
             if direction == 'N' or direction == 'S':
                 c.create_oval(self.x-1,self.y-2.5,self.x+1,self.y+2.5,outline='brown',fill='red')
@@ -337,10 +453,53 @@ class zombie():
                 Label1.destroy()
                 Label1 = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
                 Label1.grid(row=1,column=0,sticky=W)
-                del(self.x,self.y,self.life,self.enegy,self.number,self.body)
-                del nbr_zombie[self.number]
-                nbr_zombie[self.number].__del__()
+                try:
+                    del(self.x,self.y,self.life,self.enegy,self.number,self.body)
+                    del nbr_zombie[self.number]
+                    nbr_zombie[self.number].__del__()
+                except:
+                    pass
+                if Kill == 10:
+                    game_board = level2
+                    for i in range(20):
+                        for j in range(20):
+                            if game_board[i][j] == 1:
+                                c.create_image(j*w/20,i*h/20,anchor=NW,image=imgwall)
 
+    def explosion_check(self,x,y):
+        global Kill,Label1,z0,z1,dead_z,explosion_view,game_board,level2
+        if self.x >= x-15 and x+15 >= self.x and self.y >= y-15 and  y+15 >= self.y:
+            c.create_oval(self.x-2.5,self.y-2.5,self.x+2.5,self.y+2.5,outline='brown',fill='red')
+            self.life -= 3
+            if self.life < 0:
+                self.life = 0
+            sound = random.randint(0,3)
+            if sound == 0:
+                zombie0.play()
+            elif sound == 1:
+                zombie1.play()
+            elif sound == 2:
+                zombie2.play()
+            else:
+                zombie3.play()
+            if self.life == 0:
+                c.delete(self.body)
+                Kill+=1
+                Label1.destroy()
+                Label1 = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
+                Label1.grid(row=1,column=0,sticky=W)
+                try:
+                    del(self.x,self.y,self.life,self.enegy,self.number,self.body)
+                    del nbr_zombie[self.number]
+                    nbr_zombie[self.number].__del__()
+                except:
+                    pass
+                if Kill == 10:
+                    game_board = level2
+                    for i in range(20):
+                        for j in range(20):
+                            if game_board[i][j] == 1:
+                                c.create_image(j*w/20,i*h/20,anchor=NW,image=imgwall)
 
 
 def zombie_main():
@@ -397,7 +556,7 @@ def collision_player():
     Label2.grid(row=1,column=0,sticky=E)
     if player_life == 0:
         tkMessageBox.showwarning("SURVIVEZZZ","!!!!!GAME OVER !!!!!")
-        root.destroy()
+        root.quit()
 
 
 root.config(bg='PeachPuff2')
@@ -408,6 +567,7 @@ w = w/2
 h = h/2
 Kill = 0
 Round = 1
+game_board = level1
 
 picbackground = Image.open("pictures/background.gif")
 picwall = Image.open("pictures/wall.gif")
@@ -435,6 +595,7 @@ x = w/100
 y = h/100
 player_life = 5
 bullet_number = 0
+bomb_number = 0
 direction = 'E'
 
 if x <=y:
@@ -486,6 +647,7 @@ nbr_zombie = [z0,z1,z2,z3,z4,z5,z6,z7,z8,z9,z10,z11,z12,z13,z14,z15,z16,z17,z18,
 
 zombie_main()
 bullet_main()
+bomb_main()
 
 c.bind("<Key>",keypress)
 c.focus_set()
@@ -497,6 +659,7 @@ Label1.grid(row=1,column=0,sticky=W)
 Label2 = Label(root, text = "Lives :%02d" %player_life, fg ='firebrick', bg ='PeachPuff2')
 Label2.grid(row=1,column=0,sticky=E)
 
-root.mainloop()
+root.protocol("WM_DELETE_WINDOW",root.quit)
 
+root.mainloop()
 root.destroy()
