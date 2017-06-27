@@ -1,4 +1,5 @@
 from Tkinter import *
+import tkFont
 import pygame
 import random
 import tkMessageBox
@@ -84,10 +85,82 @@ pistol1.set_volume(0.75)
 reload1 = pygame.mixer.Sound("audio/reload.wav")
 reload1.set_volume(0.75)
 
-root = Tk()
-
 def new():
     c.delete(ALL)
+
+def helpp():
+    global imghand,value,helptitle,titley,c1,keystxt,upkeytxt,downkeytxt,leftkeytxt,rightkeytxt,shootkeytxt,reloadkeytxt,bombkeytxt,root
+    titley = 45
+    helproot = Toplevel()
+    helproot.title('Help')
+    print dir(Toplevel)
+    c1 = Canvas(helproot,width= 400,height=500,bg='PeachPuff2')
+    c1.mainloop()
+    imghand = PhotoImage(file="pictures/hand.gif")
+    c1.create_image(200,250,anchor=CENTER,image=imghand)
+    helptitle = c1.create_text(200,titley,text='SURVIVEZZZ',anchor=CENTER,font='Helvetica 24 bold')
+    keystxt = c1.create_text(200,titley+50,text='KEYS',anchor=CENTER,font='Helvetica 20 bold')
+    upkeytxt = c1.create_text(200,titley+75,text='Up  --->  z, w, up',anchor=CENTER,font='Helvetica 12 bold')
+    downkeytxt = c1.create_text(200,titley+100,text='Down  --->  s, down',anchor=CENTER,font='Helvetica 12 bold')
+    leftkeytxt = c1.create_text(200,titley+125,text='Left  --->  q, a, left',anchor=CENTER,font='Helvetica 12 bold')
+    rightkeytxt = c1.create_text(200,titley+150,text='Right  --->  d, right',anchor=CENTER,font='Helvetica 12 bold')
+    shootkeytxt = c1.create_text(200,titley+175,text='Shoot  --->  space',anchor=CENTER,font='Helvetica 12 bold')
+    reloadkeytxt = c1.create_text(200,titley+200,text='Reload  --->  r',anchor=CENTER,font='Helvetica 12 bold')
+    bombkeytxt = c1.create_text(200,titley+225,text='Bomb  --->  b',anchor=CENTER,font='Helvetica 12 bold')
+    value = StringVar()
+    value.set(1)
+    scale = Scale(helproot,from_=1,to=10,orient=VERTICAL,showvalue=0,length=500,variable=value,command=help_scroll)
+    scale.grid(row=0,column=1)
+    c1.grid(row=0,column=0)
+    c1.focus_set()
+
+    helproot.mainloop()
+    helproot.destroy()
+
+def help_scroll(valu):
+    global imghand,value,helptitle,titley,c1,keystxt,upkeytxt,downkeytxt,leftkeytxt,rightkeytxt,shootkeytxt,reloadkeytxt,bombkeytxt,root
+    if value<=valu:
+        titley -= 25
+        c1.delete(helptitle)
+        c1.delete(keystxt)
+        c1.delete(upkeytxt)
+        c1.delete(downkeytxt)
+        c1.delete(leftkeytxt)
+        c1.delete(rightkeytxt)
+        c1.delete(shootkeytxt)
+        c1.delete(reloadkeytxt)
+        c1.delete(bombkeytxt)
+        helptitle = c1.create_text(200,titley,text='SURVIVEZZZ',anchor=CENTER,font='Helvetica 24 bold')
+        keystxt = c1.create_text(200,titley+50,text='KEYS',anchor=CENTER,font='Helvetica 12 bold')
+        upkeytxt = c1.create_text(200,titley+75,text='Up  --->  z, w, up',anchor=CENTER,font='Helvetica 12 bold')
+        downkeytxt = c1.create_text(200,titley+100,text='Down  --->  s, down',anchor=CENTER,font='Helvetica 12 bold')
+        leftkeytxt = c1.create_text(200,titley+125,text='Left  --->  q, a, left',anchor=CENTER,font='Helvetica 12 bold')
+        rightkeytxt = c1.create_text(200,titley+150,text='Right  --->  d, right',anchor=CENTER,font='Helvetica 12 bold')
+        shootkeytxt = c1.create_text(200,titley+175,text='Shoot  --->  space',anchor=CENTER,font='Helvetica 12 bold')
+        reloadkeytxt = c1.create_text(200,titley+200,text='Reload  --->  r',anchor=CENTER,font='Helvetica 12 bold')
+        bombkeytxt = c1.create_text(200,titley+225,text='Bomb  --->  b',anchor=CENTER,font='Helvetica 12 bold')
+        value = valu
+    else:
+        titley += 25
+        c1.delete(helptitle)
+        c1.delete(keystxt)
+        c1.delete(upkeytxt)
+        c1.delete(downkeytxt)
+        c1.delete(leftkeytxt)
+        c1.delete(rightkeytxt)
+        c1.delete(shootkeytxt)
+        c1.delete(reloadkeytxt)
+        c1.delete(bombkeytxt)
+        helptitle = c1.create_text(200,titley,text='SURVIVEZZZ',anchor=CENTER,font='Helvetica 24 bold')
+        keystxt = c1.create_text(200,titley+50,text='KEYS',anchor=CENTER,font='Helvetica 12 bold')
+        upkeytxt = c1.create_text(200,titley+75,text='Up  --->  z, w, up',anchor=CENTER,font='Helvetica 12 bold')
+        downkeytxt = c1.create_text(200,titley+100,text='Down  --->  s, down',anchor=CENTER,font='Helvetica 12 bold')
+        leftkeytxt = c1.create_text(200,titley+125,text='Left  --->  q, a, left',anchor=CENTER,font='Helvetica 12 bold')
+        rightkeytxt = c1.create_text(200,titley+150,text='Right  --->  d, right',anchor=CENTER,font='Helvetica 12 bold')
+        shootkeytxt = c1.create_text(200,titley+175,text='Shoot  --->  space',anchor=CENTER,font='Helvetica 12 bold')
+        reloadkeytxt = c1.create_text(200,titley+200,text='Reload  --->  r',anchor=CENTER,font='Helvetica 12 bold')
+        bombkeytxt = c1.create_text(200,titley+225,text='Bomb  --->  b',anchor=CENTER,font='Helvetica 12 bold')
+        value = valu
 
 def keypress(event):
     global x,y,x1,y1,player,bullet_number,direction,n,bullet1,bullet2,bullet3,bullet4,bullet5,bomb_number,bomb1,bomb2,bomb3,bomb4,bomb5
@@ -96,7 +169,7 @@ def keypress(event):
     player_wally = int(player_wally/5)
     player_wallx = ((x/float(w))*100)
     player_wallx = int(player_wallx/5)
-    if key == "Up" and y>5:
+    if (key == "Up" or key == 'z' or key == 'w') and y>5:
         direction = 'N'
         y -= 5
         y1 -= 5
@@ -107,7 +180,7 @@ def keypress(event):
             y1 += 5
         c.coords(gun,x+diff,y-10,x1,y1)
 
-    elif key ==  "Down" and y1<h-5:
+    elif (key ==  "Down" or key == 's') and y1<h-5:
         direction = 'S'
         y += 5
         y1 += 5
@@ -118,7 +191,7 @@ def keypress(event):
             y1 -= 5
         c.coords(gun,x+diff,y+diff,x1,y1+10)
 
-    elif key == "Left" and x>5:
+    elif (key == "Left" or key == 'q' or key == 'a') and x>5:
         direction = 'W'
         x -= 5
         x1 -= 5
@@ -129,7 +202,7 @@ def keypress(event):
             x1 += 5
         c.coords(gun,x1-diff,y+diff,x-10,y1)
 
-    elif key == "Right" and x1<w-5:
+    elif (key == "Right" or key == 'd') and x1<w-5:
         direction = 'E'
         x+=5
         x1 += 5
@@ -367,7 +440,7 @@ def bullet_main():
 
 
 class zombie():
-    global Kill,Label1
+    global Kill,Label_kill
     def __init__(self, e, l, n):
         self.energy = e
         self.life = l
@@ -431,7 +504,7 @@ class zombie():
             collision_player()
 
     def collision_check(self,x,y,direction):
-        global Kill,Label1,z0,z1,dead_z,game_board,level2
+        global Kill,Label_kill,z0,z1,dead_z,game_board,level2
         if self.x-2.5 <= x <= self.x+2.5 and self.y-2.5 <= y <= self.y+2.5:
             if direction == 'N' or direction == 'S':
                 c.create_oval(self.x-1,self.y-2.5,self.x+1,self.y+2.5,outline='brown',fill='red')
@@ -450,16 +523,19 @@ class zombie():
             if self.life == 0:
                 c.delete(self.body)
                 Kill+=1
-                Label1.destroy()
-                Label1 = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
-                Label1.grid(row=1,column=0,sticky=W)
+                Label_kill.destroy()
+                Label_kill = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
+                Label_kill.grid(row=1,column=0,sticky=W)
                 try:
                     del(self.x,self.y,self.life,self.enegy,self.number,self.body)
                     del nbr_zombie[self.number]
                     nbr_zombie[self.number].__del__()
                 except:
                     pass
-                if Kill == 10:
+                if Kill == 30:
+                    Wave = 'II'
+                    Label_wave = Label(root, text = "Wave : %s" %Wave, fg ='firebrick', bg ='PeachPuff2')
+                    Label_wave.grid(row=1,column=0)
                     game_board = level2
                     for i in range(20):
                         for j in range(20):
@@ -467,7 +543,7 @@ class zombie():
                                 c.create_image(j*w/20,i*h/20,anchor=NW,image=imgwall)
 
     def explosion_check(self,x,y):
-        global Kill,Label1,z0,z1,dead_z,explosion_view,game_board,level2
+        global Kill,Label_kill,z0,z1,dead_z,explosion_view,game_board,level2
         if self.x >= x-15 and x+15 >= self.x and self.y >= y-15 and  y+15 >= self.y:
             c.create_oval(self.x-2.5,self.y-2.5,self.x+2.5,self.y+2.5,outline='brown',fill='red')
             self.life -= 3
@@ -485,9 +561,9 @@ class zombie():
             if self.life == 0:
                 c.delete(self.body)
                 Kill+=1
-                Label1.destroy()
-                Label1 = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
-                Label1.grid(row=1,column=0,sticky=W)
+                Label_kill.destroy()
+                Label_kill = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
+                Label_kill.grid(row=1,column=0,sticky=W)
                 try:
                     del(self.x,self.y,self.life,self.enegy,self.number,self.body)
                     del nbr_zombie[self.number]
@@ -545,19 +621,21 @@ def zombie_main():
     root.after(100,zombie_main)
 
 def collision_player():
-    global player_life,Label2
+    global player_life,Label_lives
     cry = random.randint(0,1)
     if cry == 0:
         player0.play()
     else:
         player1.play()
-    Label2.destroy()
-    Label2 = Label(root, text = "Lives :%02d" %player_life, fg ='firebrick', bg ='PeachPuff2')
-    Label2.grid(row=1,column=0,sticky=E)
+    Label_lives.destroy()
+    Label_lives = Label(root, text = "Lives :%02d" %player_life, fg ='firebrick', bg ='PeachPuff2')
+    Label_lives.grid(row=1,column=0,sticky=E)
     if player_life == 0:
         tkMessageBox.showwarning("SURVIVEZZZ","!!!!!GAME OVER !!!!!")
         root.quit()
 
+root = Tk()
+root.title('SURVIVEZZZ')
 
 root.config(bg='PeachPuff2')
 
@@ -568,22 +646,25 @@ h = h/2
 Kill = 0
 Round = 1
 game_board = level1
+game_pause = False
 
-picbackground = Image.open("pictures/background.gif")
+picbackground = Image.open("pictures/bg.gif")
 picwall = Image.open("pictures/wall.gif")
 
 picbackground = picbackground.resize((w,h))
-picbackground.save("pictures/background1.gif", "GIF", colormode="color")
+picbackground.save("pictures/bg1.gif", "GIF", colormode="color")
 
 picwall = picwall.resize((w/20,h/20))
 picwall.save("pictures/wall1.gif", "GIF", colormode="color")
 
 c = Canvas(root,width= w,height=h,bg='PeachPuff2')
 
-imgheart = PhotoImage (file="pictures/heart.gif")
-imgdead = PhotoImage (file="pictures/dead_heart.gif")
+#imgheart = PhotoImage (file="pictures/heart.gif")
+#imgdead = PhotoImage (file="pictures/dead_heart.gif")
 imgwall =  PhotoImage(file="pictures/wall1.gif")
-imgbackground = PhotoImage(file="pictures/background1.gif")
+imgbackground = PhotoImage(file="pictures/bg1.gif")
+imghand = PhotoImage(file="pictures/hand.gif")
+imgblood = PhotoImage(file="pictures/blood.gif")
 
 c.create_image(0,0,anchor=NW,image=imgbackground)
 for i in range(20):
@@ -596,6 +677,7 @@ y = h/100
 player_life = 5
 bullet_number = 0
 bomb_number = 0
+Wave = 'I'
 direction = 'E'
 
 if x <=y:
@@ -653,11 +735,25 @@ c.bind("<Key>",keypress)
 c.focus_set()
 c.grid(row=0,column=0)
 
-Label1 = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
-Label1.grid(row=1,column=0,sticky=W)
+Label_kill = Label(root, text = "Kill :%02d" %Kill, fg ='firebrick', bg ='PeachPuff2')
+Label_kill.grid(row=1,column=0,sticky=W)
 
-Label2 = Label(root, text = "Lives :%02d" %player_life, fg ='firebrick', bg ='PeachPuff2')
-Label2.grid(row=1,column=0,sticky=E)
+Label_wave = Label(root, text = "Wave : %s" %Wave, fg ='firebrick', bg ='PeachPuff2')
+Label_wave.grid(row=1,column=0)
+
+Label_lives = Label(root, text = "Lives :%02d" %player_life, fg ='firebrick', bg ='PeachPuff2')
+Label_lives.grid(row=1,column=0,sticky=E)
+
+menu = Menu(root)
+menufile = Menu(menu,tearoff=0)
+menuhelp = Menu(menu,tearoff=0)
+
+menufile.add_command(label="New game",command=new)
+menu.add_cascade(label="File", menu=menufile)
+
+menu.add_command(label="Help",command=helpp)
+
+root.config(menu=menu)
 
 root.protocol("WM_DELETE_WINDOW",root.quit)
 
